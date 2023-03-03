@@ -192,16 +192,16 @@ def _fill_city_map(city_map, record_dict):
         pass
     elif city_name.endswith(u'市'):
         city_map.append_relational_addr(city_name[:-1], pca_tuple, C)
-    
-    elif city_name in zizhi_area_names.keys():
-        city_map.append_relational_addr(zizhi_area_names[city_name], pca_tuple, C)
-
     # 特别行政区
     # elif city_name == u'香港特别行政区':
     #     city_map.append_relational_addr(u'香港', pca_tuple, C)
     # elif city_name == u'澳门特别行政区':
     #     city_map.append_relational_addr(u'澳门', pca_tuple, C)
     # 自治区下的二级区划，eg喀什地区
+
+    elif city_name in zizhi_area_names.keys():
+        city_map.append_relational_addr(zizhi_area_names[city_name], pca_tuple, C)
+
     elif len(city_name) > 3 and city_name.endswith(u'地区'):
         city_map.append_relational_addr(city_name[:-2], pca_tuple, C)
 

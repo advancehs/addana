@@ -6,7 +6,7 @@
 import sys
 
 sys.path.append('..')
-import addressparser
+import addressparser2
 
 
 def string_dataframe(df):
@@ -32,30 +32,30 @@ def test_simple_area():
                     "湖北武汉武昌区复兴路1号",
                     "山西晋城市城区开发区怡凤小区凤巢小学对面10号楼"
                     ]
-    df = addressparser.transform(location_str)
+    df = addressparser2.transform(location_str)
     print(df)
 
 
 def test_city_detail():
-    df_str = string_dataframe(addressparser.transform(['上海市浦东虹漕路461号58号楼5楼']))
+    df_str = string_dataframe(addressparser2.transform(['上海市浦东虹漕路461号58号楼5楼']))
     print(df_str)
     assert df_str == '上海市上海市浦东新区'
 
 
 def test_city_detail_1():
-    df_str = string_dataframe(addressparser.transform(['天津滨海新区小何小区111号']))
+    df_str = string_dataframe(addressparser2.transform(['天津滨海新区小何小区111号']))
     print(df_str)
     assert df_str == '天津市天津市滨海新区'
 
 
 def test_city_detail_2():
-    df_str = string_dataframe(addressparser.transform(['孝感安陆小何小区111号']))
+    df_str = string_dataframe(addressparser2.transform(['孝感安陆小何小区111号']))
     print(df_str)
     assert df_str == '湖北省孝感市安陆市'
 
 
 def test_city_detail_3():
-    df_str = string_dataframe(addressparser.transform(['山西晋城市城区开发区怡凤小区凤巢小学对面10号楼']))
+    df_str = string_dataframe(addressparser2.transform(['山西晋城市城区开发区怡凤小区凤巢小学对面10号楼']))
     print(df_str)
 
 
@@ -65,10 +65,10 @@ def test_predict_city():
                     "河北北戴河区融合小区11号",
                     ]
     print('-' * 42)
-    df = addressparser.transform(location_str)
+    df = addressparser2.transform(location_str)
     print(df)
 
-    df_str = string_dataframe(addressparser.transform(['河北北戴河区融合小区11号']))
+    df_str = string_dataframe(addressparser2.transform(['河北北戴河区融合小区11号']))
     print(df_str)
     assert df_str == '河北省秦皇岛市北戴河区'
 
@@ -79,10 +79,10 @@ def test_predict_province():
                     "秦皇岛北戴河区融合小区11号",
                     ]
     print('-' * 42)
-    df = addressparser.transform(location_str)
+    df = addressparser2.transform(location_str)
     print(df)
 
-    df_str = string_dataframe(addressparser.transform(['秦皇岛北戴河区融合小区11号']))
+    df_str = string_dataframe(addressparser2.transform(['秦皇岛北戴河区融合小区11号']))
     print(df_str)
     assert df_str == '河北省秦皇岛市北戴河区'
 
@@ -96,7 +96,7 @@ def test_error_city_jilin():
         "吉林白山市临江市城区吉林省临江市新市街道鸭绿江花园1号",
         "吉林白山市临江市城区新市街道鸭绿江花园1号",
     ]
-    df = addressparser.transform(location_str)
+    df = addressparser2.transform(location_str)
     print(df)
 
 
@@ -114,5 +114,5 @@ def test_error_city_hainan():
         "河南宽城县祥和小区22号",
 
     ]
-    df = addressparser.transform(location_str, cut=False)
+    df = addressparser2.transform(location_str, cut=False)
     print(df)

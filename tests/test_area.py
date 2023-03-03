@@ -6,12 +6,12 @@
 import sys
 
 sys.path.append('..')
-import addressparser
+import addressparser2
 
 
 def test_error_area():
     """3级地名测试"""
-    print(addressparser.__version__)
+    print(addressparser2.__version__)
     print('-' * 42)
     location_str = [
         "北京市昌平区昌平路97号新元科技园B座504",
@@ -21,7 +21,7 @@ def test_error_area():
         "杭州市下城区朝晖路168号钛合国际A座1204室",
     ]
 
-    addr_df = addressparser.transform(location_str, pos_sensitive=True)
+    addr_df = addressparser2.transform(location_str, pos_sensitive=True)
     print(addr_df)
 
     def _assert_line(linenum, province, city, area, addr,

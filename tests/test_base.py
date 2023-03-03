@@ -3,8 +3,8 @@
 import sys
 
 sys.path.append('..')
-import addressparser
-from addressparser.structures import Pca
+import addressparser2
+from addressparser2.structures import Pca
 
 
 def assert_addr(addr_df, pos_sensitive=False):
@@ -30,24 +30,24 @@ def test_transform():
     addr_list = ["徐汇区虹漕路461号58号楼5楼", "泉州市洛江区万安塘西工业区", "福建省鼓楼区鼓楼医院",
                  "天津市"]
     # 分词模式
-    transed = addressparser.transform(addr_list, cut=True)
+    transed = addressparser2.transform(addr_list, cut=True)
     print(transed)
     assert_addr(transed)
 
     # 全文匹配
-    transed = addressparser.transform(addr_list, cut=False, pos_sensitive=True)
+    transed = addressparser2.transform(addr_list, cut=False, pos_sensitive=True)
     print(transed)
     assert_addr(transed)
 
     # 分词匹配 测试pos_sensitive
-    transed = addressparser.transform(addr_list, cut=True, pos_sensitive=True)
+    transed = addressparser2.transform(addr_list, cut=True, pos_sensitive=True)
     print(transed)
     assert_addr(transed, pos_sensitive=True)
 
 
 def test_data_from_csv():
     """测试数据加载"""
-    area_map, city_map, province_area_map, province_map, latlng = addressparser._data_from_csv()
+    area_map, city_map, province_area_map, province_map, latlng = addressparser2._data_from_csv()
     print("....")
     assert province_map['北京'] == '北京市'
     assert city_map.get_full_name('北京') == '北京市'
@@ -66,20 +66,20 @@ def test_data_from_csv():
 
 def test_fill_province():
     pca = Pca('', '淮安市', '')
-    addressparser._fill_province(pca)
+    addressparser2._fill_province(pca)
     assert pca.province == "江苏省"
     assert pca.city == '淮安市'
 
 
 def test_fill_city_1():
     pca = Pca('', '', '朝阳区')
-    addressparser._fill_city(pca, {'朝阳区': '北京市'}, True)
+    addressparser2._fill_city(pca, {'朝阳区': '北京市'}, True)
     assert pca.city == '北京市'
 
 
 def test_jieba_extract():
     """地址全部在句子开头的情况"""
-    pca, addr = addressparser._jieba_extract('湖北武汉复兴路111号')
+    pca, addr = addressparser2._jieba_extract('湖北武汉复兴路111号')
     print(pca, addr)
     assert addr == '复兴路111号'
     assert pca.province == '湖北省'
@@ -90,7 +90,7 @@ def test_jieba_extract():
 
 def test_jieba_extract2():
     """地址在句子中间的情况"""
-    pca, addr = addressparser._jieba_extract('我家的地址是湖北武汉武昌区复兴路111号')
+    pca, addr = addressparser2._jieba_extract('我家的地址是湖北武汉武昌区复兴路111号')
     assert addr == '我家的地址是湖北武汉武昌区复兴路111号'
     assert pca.province == '湖北省'
     assert pca.province_pos == 6
@@ -102,7 +102,7 @@ def test_jieba_extract2():
 
 def test_jieba_extract3():
     """测试地名出现两次省名的情况"""
-    pca, addr = addressparser._jieba_extract('我家的地址是湖北武汉武昌区复兴路111号上海市')
+    pca, addr = addressparser2._jieba_extract('我家的地址是湖北武汉武昌区复兴路111号上海市')
     assert addr == '我家的地址是湖北武汉武昌区复兴路111号上海市'
     assert pca.province == '湖北省'
     assert pca.province_pos == 6
@@ -114,7 +114,7 @@ def test_jieba_extract3():
 
 def test_full_text_extract0():
     """地址在开头"""
-    pca, addr = addressparser._full_text_extract('湖北省武汉武昌区复兴路111号', 8)
+    pca, addr = addressparser2._full_text_extract('湖北省武汉武昌区复兴路111号', 8)
     print(pca, addr)
     assert addr == '复兴路111号'
     assert pca.province == '湖北省'
@@ -127,7 +127,7 @@ def test_full_text_extract0():
 
 def test_full_text_extract1():
     """地址在开头"""
-    pca, addr = addressparser._full_text_extract('湖北武汉武昌区复兴路111号', 8)
+    pca, addr = addressparser2._full_text_extract('湖北武汉武昌区复兴路111号', 8)
     print(pca, addr)
     assert addr == '复兴路111号'
     assert pca.province == '湖北省'
@@ -140,7 +140,7 @@ def test_full_text_extract1():
 
 def test_full_text_extract2():
     """地址在结尾"""
-    pca, addr = addressparser._full_text_extract('我的家在湖北武汉武昌区', 8)
+    pca, addr = addressparser2._full_text_extract('我的家在湖北武汉武昌区', 8)
     print(pca, addr)
     assert addr == '我的家在湖北武汉武昌区'
     assert pca.province == '湖北省'
@@ -153,7 +153,7 @@ def test_full_text_extract2():
 
 def test_full_text_extract3():
     """地址在中间, 验证地址截取规则:只截取句子开头提取到的地址"""
-    pca, addr = addressparser._full_text_extract('我家的地址是湖北武汉武昌区复兴路1号', 8)
+    pca, addr = addressparser2._full_text_extract('我家的地址是湖北武汉武昌区复兴路1号', 8)
     print(pca, addr)
     assert addr == '我家的地址是湖北武汉武昌区复兴路1号'
     assert pca.province == '湖北省'
@@ -166,7 +166,7 @@ def test_full_text_extract3():
 
 def test_full_text_extract4():
     """测试较小的lookahead"""
-    pca, addr = addressparser._full_text_extract('湖北武汉东西湖区复兴路1号', 2)
+    pca, addr = addressparser2._full_text_extract('湖北武汉东西湖区复兴路1号', 2)
     print(pca, addr)
     assert addr == '东西湖区复兴路1号'
     assert pca.province == '湖北省'
@@ -179,7 +179,7 @@ def test_full_text_extract4():
 
 def test_full_text_extract5():
     """测试满足贪婪匹配模式"""
-    pca, addr = addressparser._full_text_extract('湖北武汉武昌区复兴路1号', 3)
+    pca, addr = addressparser2._full_text_extract('湖北武汉武昌区复兴路1号', 3)
     print(pca, addr)
     assert addr == '复兴路1号'
     assert pca.province == '湖北省'
@@ -192,7 +192,7 @@ def test_full_text_extract5():
 
 def test_full_text_extract6():
     """地址在开头 4级地址测试"""
-    pca, addr = addressparser._full_text_extract('泉州市洛江区万安塘西工业区', 8)
+    pca, addr = addressparser2._full_text_extract('泉州市洛江区万安塘西工业区', 8)
     print(pca, addr)
     assert addr == '万安塘西工业区'
     assert pca.province_pos == -1
@@ -204,7 +204,7 @@ def test_full_text_extract6():
 
 def test_handle_one_record1():
     """分词模式"""
-    result1 = addressparser._handle_one_record("江苏淮安市人民路111号", {}, True, 0, True, True)
+    result1 = addressparser2._handle_one_record("江苏淮安市人民路111号", {}, True, 0, True, True)
     print(result1)
     assert result1["省"] == '江苏省'
     assert result1['市'] == '淮安市'
@@ -217,7 +217,7 @@ def test_handle_one_record1():
 
 def test_handle_one_record2():
     """全文模式"""
-    result1 = addressparser._handle_one_record("江苏淮安市人民路111号", {}, False, 5, True, True)
+    result1 = addressparser2._handle_one_record("江苏淮安市人民路111号", {}, False, 5, True, True)
     print(result1)
     assert result1["省"] == '江苏省'
     assert result1['市'] == '淮安市'
@@ -230,7 +230,7 @@ def test_handle_one_record2():
 
 def test_handle_one_record3():
     """省区推断市的模式"""
-    result1 = addressparser._handle_one_record("江苏省清江浦区人民路111号", {}, False, 5, True, True)
+    result1 = addressparser2._handle_one_record("江苏省清江浦区人民路111号", {}, False, 5, True, True)
 
     assert result1["省"] == '江苏省'
     assert result1['市'] == '淮安市'

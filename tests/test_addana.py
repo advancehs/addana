@@ -4,8 +4,10 @@
 
 
 import unittest
+import sys
 
-from addana import addana
+sys.path.append('..')
+import  addressparser2
 
 
 class TestAddana(unittest.TestCase):

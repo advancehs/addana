@@ -6,7 +6,7 @@
 import sys
 
 sys.path.append('..')
-import addressparser
+import addressparser2
 
 
 def test_error_province():
@@ -24,7 +24,7 @@ def test_error_province():
         "珠江新城广晟国际大厦801室",
     ]
     print('-' * 42)
-    df = addressparser.transform(location_str)
+    df = addressparser2.transform(location_str)
     print(df)
     assert df.loc[0, '省'] == '浙江省'
     assert df.loc[1, '省'] == '天津市'
@@ -43,5 +43,5 @@ def test_place():
     location_str = [
         "天津空港经济区环河北路80号空港商务园东区",
     ]
-    df = addressparser.transform(location_str)
+    df = addressparser2.transform(location_str)
     print(df)

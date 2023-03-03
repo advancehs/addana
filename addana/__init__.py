@@ -113,7 +113,7 @@ short_area_names = {
 }
 # 处理了部分常见自治州或盟简写
 zizhi_area_names = {
-    u'吉林市': u'吉林',
+    # u'吉林市': u'吉林',
     u'锡林郭勒盟': u'锡林郭勒',
     u'阿拉善盟': u'阿拉善',
     u'兴安盟': u'兴安',
@@ -189,9 +189,9 @@ def _fill_city_map(city_map, record_dict):
     pca_tuple = (record_dict[1], record_dict[2], record_dict[3])
     city_map.append_relational_addr(city_name, pca_tuple, C)
     # fix 吉林省、吉林市的混淆
-    if city_name in filter_city_names:
-        pass
-    elif city_name.endswith(u'市'):
+    # if city_name in filter_city_names:
+    #     pass
+    if city_name.endswith(u'市'):
         city_map.append_relational_addr(city_name[:-1], pca_tuple, C)
     # 特别行政区
     # elif city_name == u'香港特别行政区':

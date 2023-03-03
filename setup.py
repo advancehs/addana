@@ -48,7 +48,10 @@ setup(
     include_package_data=True,
     keywords='addana',
     name='addana',
-    packages=find_packages(include=['addana', 'addana.*']),
+    packages=find_packages(include=['addana', 'addana.*'.'data']),
+    package_data={
+        'addana': ['*.*'],
+    },
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,

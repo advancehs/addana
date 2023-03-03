@@ -59,6 +59,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/advancehs/addana',
-    version='0.0.7',
+    version='0.0.8',
     zip_safe=False,
 )

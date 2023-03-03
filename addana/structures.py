@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
+@author:Shuohu（1019753743@qq.com)
 @description:
 """
 from collections import defaultdict

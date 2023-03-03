@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
+@author:Shuohu（1019753743@qq.com)
 @description:
 """
 
@@ -111,7 +111,43 @@ short_area_names = {
     u'宽城满族自治县': u'宽城县',
     u'围场满族蒙古族自治县': u'围场县',
 }
+# 处理了部分常见自治州或盟简写
+zizhi_area_names = {
+    u'锡林郭勒盟': u'锡林郭勒',
+    u'阿拉善盟': u'阿拉善',
+    u'兴安盟': u'兴安',
+    u'延边朝鲜族自治州' :    u'延边' ,
+    u'恩施土家族苗族自治州':  u'恩施' ,
+    u'湘西土家族苗族自治州':  u'湘西' ,
+    u'阿坝藏族羌族自治州':   u'阿坝',
+    u'甘孜藏族自治州':  u'甘孜' ,
+    u'凉山彝族自治州':   u'凉山',
+    u'黔西南布依族苗族自治州': u'黔西南'  ,
+    u'黔东南苗族侗族自治州': u'黔东南'  ,
+    u'黔南布依族苗族自治州': u'黔南'  ,
+    u'楚雄彝族自治州': u'楚雄'  ,
+    u'红河哈尼族彝族自治州':  u'红河' ,
+    u'文山壮族苗族自治州':  u'文山' ,
+    u'西双版纳傣族自治州': u'西双版纳'  ,
+    u'大理白族自治州':   u'大理',
+    u'德宏傣族景颇族自治州': u'德宏'  ,
+    u'怒江傈僳族自治州': u'怒江'  ,
+    u'迪庆藏族自治州':  u'迪庆' ,
+    u'临夏回族自治州': u'临夏'  ,
+    u'甘南藏族自治州': u'甘南'  ,
+    u'海北藏族自治州':  u'海北' ,
+    u'黄南藏族自治州': u'黄南'  ,
+    u'海南藏族自治州': u'海南'  ,
+    u'果洛藏族自治州':  u'果洛' ,
+    u'玉树藏族自治州':  u'玉树' ,
+    u'海西蒙古族藏族自治州':  u'海西' ,
+    u'昌吉回族自治州':   u'昌吉',
+    u'博尔塔拉蒙古自治州':  u'博尔塔拉' ,
+    u'巴音郭楞蒙古自治州':  u'巴音郭楞' ,
+    u'克孜勒苏柯尔克孜自治州':  u'克孜勒苏' ,
+    u'伊犁哈萨克自治州': u'伊犁州直属县'  ,
 
+}
 
 def _fill_area_map(area_map, record_dict):
     """
@@ -156,6 +192,10 @@ def _fill_city_map(city_map, record_dict):
         pass
     elif city_name.endswith(u'市'):
         city_map.append_relational_addr(city_name[:-1], pca_tuple, C)
+    
+    elif city_name in zizhi_area_names.keys():
+        city_map.append_relational_addr(zizhi_area_names[city_name], pca_tuple, C)
+
     # 特别行政区
     # elif city_name == u'香港特别行政区':
     #     city_map.append_relational_addr(u'香港', pca_tuple, C)

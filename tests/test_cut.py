@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-@author:XuMing（xuming624@qq.com)
-@description: 
+@author:Shuohu（1019753743@qq.com)
+@description:
 """
 import os
 

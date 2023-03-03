@@ -1,5 +1,4 @@
 pycharts
 pandas
 jieba
-
-jieba
+folium

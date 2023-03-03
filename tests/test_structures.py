@@ -3,7 +3,7 @@
 import sys
 
 sys.path.append('..')
-from addressparser2 import P, C
+from addana import P, C
 
 
 class TestAddrMap(object):
@@ -15,7 +15,7 @@ class TestAddrMap(object):
 
     @classmethod
     def setup_class(cls):
-        from addressparser2.structures import AddrMap
+        from addana.structures import AddrMap
         cls.C = C
         cls.addr_map = AddrMap()
         cls.addr_map.append_relational_addr('淮安', cls.place, cls.C)
@@ -51,7 +51,7 @@ class TestPca(object):
 
     @classmethod
     def setup_class(cls):
-        from addressparser2.structures import Pca
+        from addana.structures import Pca
         cls.pca = Pca('安徽省', '合肥市', '肥东区', 0, 3, 7)
         cls.pca1 = Pca("浙江省", "丽水市", "青田县")
 

@@ -7,7 +7,7 @@ import unittest
 import sys
 
 sys.path.append('..')
-import  addressparser2
+import  addana
 
 
 class TestAddana(unittest.TestCase):

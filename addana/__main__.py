@@ -7,7 +7,7 @@ import argparse
 import sys
 
 sys.path.append('..')
-import addressparser2
+import addana
 
 
 def parse(addresses, cut=False):
@@ -18,7 +18,7 @@ def parse(addresses, cut=False):
     :return: list of province, city, country and street
     """
     result = []
-    df = addressparser2.transform(addresses, open_warning=False, cut=cut)
+    df = addana.transform(addresses, open_warning=False, cut=cut)
 
     for map_key in zip(df["省"], df["市"], df["区"], df["地名"]):
         place = map_key[3]

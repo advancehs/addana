@@ -4,11 +4,11 @@ import sys
 import pandas as pd
 
 sys.path.append('..')
-import addressparser2
-from addressparser2 import drawer
+import addana
+from addana import drawer
 
 origin_addr = pd.read_csv(os.path.join(os.path.dirname(__file__), 'addr.csv'))
-df = addressparser2.transform(origin_addr['原始地址'])
+df = addana.transform(origin_addr['原始地址'])
 
 
 def test_draw_locations():

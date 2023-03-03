@@ -289,7 +289,7 @@ def transform(location_strs, umap=myumap, index=[], cut=False, lookahead=8, pos_
         from .exceptions import InputTypeNotSuportException
         raise InputTypeNotSuportException(
             'location_strs参数必须为可迭代的类型(比如list, Series等实现了__iter__方法的对象)')
-
+    lookahead = 16 if location_strs>8 else 16 
     result = pd.DataFrame(
         [_handle_one_record(addr, umap, cut, lookahead, pos_sensitive, open_warning) for addr in location_strs],
         index=index) \

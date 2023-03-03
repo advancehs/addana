@@ -49,7 +49,7 @@ setup(
     keywords='addana',
     name='addana',
     packages=find_packages(exclude=['tests']),
-    package_dir={'addana': 'addana'},
+    # package_dir={'addana': 'addana'},
     package_data={
         'addana': ['*.*'],
         'addana': ['*.*.*'],
@@ -59,6 +59,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/advancehs/addana',
-    version='0.0.9',
+    version='0.0.7',
     zip_safe=False,
 )

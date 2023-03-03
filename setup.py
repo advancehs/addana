@@ -48,16 +48,15 @@ setup(
     include_package_data=True,
     keywords='addana',
     name='addana',
-    packages=find_packages( ),
+    packages=find_packages(include=['addana', 'addana.*','addana.data']),
     # package_dir={'addana': 'addana'},
     package_data={
         'addana': ['*.*'],
-        'addana': ['*.*.*'],
     },
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/advancehs/addana',
-    version='0.0.13',
+    version='0.0.12',
     zip_safe=False,
 )

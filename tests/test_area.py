@@ -8,7 +8,6 @@ import sys
 sys.path.append('..')
 import addana
 
-
 def test_error_area():
     """3级地名测试"""
     print(addana.__version__)
@@ -25,7 +24,7 @@ def test_error_area():
     print(addr_df)
 
     def _assert_line(linenum, province, city, area, addr,
-                     province_pos=-1, city_pos=-1, area_pos=-1):
+                    province_pos=-1, city_pos=-1, area_pos=-1):
         assert addr_df.loc[linenum, '省'] == province
         assert addr_df.loc[linenum, '市'] == city
         assert addr_df.loc[linenum, '区'] == area
@@ -39,3 +38,4 @@ def test_error_area():
     _assert_line(2, '山东省', '青岛市', '市南区', '浙江路14号2楼', -1, 0, 3)
     _assert_line(3, '北京市', '北京市', '朝阳区', '裕民路12号中国国际科技会展中心A座1005', 0, 0, 3)
     _assert_line(4, '浙江省', '杭州市', '下城区', '朝晖路168号钛合国际A座1204室', -1, 0, 3)
+

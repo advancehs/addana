@@ -1,4 +1,4 @@
-pycharts
+pyecharts
 pandas
 jieba
 folium

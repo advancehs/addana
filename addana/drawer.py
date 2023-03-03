@@ -58,7 +58,7 @@ def echarts_draw(locations, file_path, title="地域分布图", subtitle="locati
     :param title: 图表的标题
     :param subtitle: 图表的子标题
     """
-    from pyecharts import Geo
+    from pyecharts.charts  import Geo
 
     _base_input_check(locations)
     count_map = {}
@@ -66,9 +66,8 @@ def echarts_draw(locations, file_path, title="地域分布图", subtitle="locati
         if latlng.get(map_key):
             count_map[map_key] = count_map.get(map_key, 0) + 1
 
-    geo = Geo(title, subtitle, title_color="#fff",
-              title_pos="center", width=1200,
-              height=600, background_color='#404a59')
+    geo = Geo(title, subtitle,  
+                )
     _geo_update(geo)
     attr, value = geo.cast(count_map)
     geo.add("", attr, value, type="heatmap", is_visualmap=True,
@@ -94,11 +93,10 @@ def echarts_cate_draw(locations, labels, file_path, title="地域分布图", sub
         from .exceptions import CPCAException
         raise CPCAException("locations的长度与labels长度必须相等")
 
-    from pyecharts import Geo
+    from pyecharts.charts  import Geo
 
-    geo = Geo(title, subtitle, title_color="#000000",
-              title_pos="center", width=1200,
-              height=600, background_color='#fff')
+    geo = Geo(title, subtitle, 
+              )
     _geo_update(geo)
 
     uniques = set(list(labels))

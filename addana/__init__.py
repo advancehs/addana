@@ -20,7 +20,7 @@ __version__ = '0.0.11'
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 # 区划地址文件
-pca_path = os.path.join(pwd_path, 'data\pca.csv')
+pca_path = os.path.join(pwd_path, 'pca.csv')
 
 if six.PY2:
     text_type = unicode

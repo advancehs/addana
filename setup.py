@@ -53,7 +53,6 @@ setup(
     package_data={
         'addana': ['*.*'],
         'addana': ['*.*.*'],
-        'addana.data': ['*.*.*'], 
     },
     setup_requires=setup_requirements,
     test_suite='tests',

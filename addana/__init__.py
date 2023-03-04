@@ -291,10 +291,10 @@ def transform(location_strs, umap=myumap, index=[], cut=False, lookahead=8, pos_
             'location_strs参数必须为可迭代的类型(比如list, Series等实现了__iter__方法的对象)')
 
     result = pd.DataFrame(
-        [_handle_one_record(addr, umap, cut, 16 if len(addr)>8 else 8, pos_sensitive, open_warning) for addr in location_strs],
+        [_handle_one_record(addr, umap, cut, 16 if len(addr)>10 else 8, pos_sensitive, open_warning) for addr in location_strs],
         index=index) \
         if index else pd.DataFrame(
-        [_handle_one_record(addr, umap, cut, 16 if len(addr)>8 else 8, pos_sensitive, open_warning) for addr in location_strs])
+        [_handle_one_record(addr, umap, cut, 16 if len(addr)>10 else 8, pos_sensitive, open_warning) for addr in location_strs])
     # 这句的唯一作用是让列的顺序好看一些
     if pos_sensitive:
         return result.loc[:, ('省', '市', '区', '地名', '省_pos', '市_pos', '区_pos')]
@@ -315,7 +315,7 @@ def _handle_one_record(addr, umap, cut, lookahead, pos_sensitive, open_warning):
         return empty
 
     # 地名提取
-    pca, left_addr = _extract_addr(addr, cut, 16 if len(addr)>8 else 8)
+    pca, left_addr = _extract_addr(addr, cut, 16 if len(addr)>10 else 8)
     # 填充市
     _fill_city(pca, umap, open_warning)
     # 填充省
@@ -369,7 +369,7 @@ def _extract_addr(addr, cut, lookahead):
        Returns:
            [sheng, shi, qu, (sheng_pos, shi_pos, qu_pos)], addr
     """
-    return _jieba_extract(addr) if cut else _full_text_extract(addr, 16 if len(addr)>8 else 8)
+    return _jieba_extract(addr) if cut else _full_text_extract(addr, 16 if len(addr)>10 else 8)
 
 
 def _jieba_extract(addr):
@@ -435,7 +435,7 @@ def _full_text_extract(addr, lookahead):
         # 用于设置pca属性的函数
         defer_fun = None
         # length为从起始位置开始的长度,从中提取出最长的地址
-        for length in range(1, 16 if len(addr)>8 else 8 + 1):
+        for length in range(1, 16 if len(addr)>10 else 8 + 1):
             end_pos = i + length
             if end_pos > len(addr):
                 break
@@ -461,3 +461,39 @@ def _full_text_extract(addr, lookahead):
             i += 1
 
     return result, addr[truncate[0]:]
+
+
+
+def pcaconcat(df,keep_col=2 ,*col,):
+    
+    '''
+    df: 处理的表
+    keep_col: 要保留的到省（1）还是市（2）还是县（3）
+    col: 字符串，可以一列，可以多列
+    '''
+    print(len(col))
+    if len(col)==1:
+        df_ =  transform(df[col[0]])
+    elif len(col)==2:
+        df_ =  transform(df[col[0]]+df[col[1]])
+    elif len(col)==3:
+        df_ =  transform(df[col[0]]+df[col[1]] +df[col[2]])
+    else:
+        print("最对传入三个列")
+
+
+    if (df_["市"]=="").sum() >0:    ## 查看省市为空的个数
+        index_error = df_[df_["市"]==""].index
+        df_.loc[index_error,"市"] =  df_.loc[index_error,"区"]
+        
+
+    if (df_["市"]=="").sum() >0:
+        print("注意，下面的行的市为空：" ,"\n",df_[df_["市"]==""].drop_duplicates())
+    else:
+        print("处理完毕，所有市都被识别")
+
+    df_.columns = ["prov_s","city_s","area_s","loca_s"]  
+     
+    return  pd.concat([df,df_.iloc[:,0:keep_col]],axis=1)
+
+

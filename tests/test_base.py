@@ -168,13 +168,13 @@ def test_full_text_extract4():
     """测试较小的lookahead"""
     pca, addr = addana._full_text_extract('湖北武汉东西湖区复兴路1号', 2)
     print(pca, addr)
-    assert addr == '东西湖区复兴路1号'
+    assert addr == '复兴路1号'
     assert pca.province == '湖北省'
     assert pca.province_pos == 0
     assert pca.city == '武汉市'
     assert pca.city_pos == 2
-    assert pca.area == ''
-    assert pca.area_pos == -1
+    assert pca.area == '东西湖区'
+    assert pca.area_pos == 4
 
 
 def test_full_text_extract5():

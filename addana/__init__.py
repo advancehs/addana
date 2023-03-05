@@ -473,10 +473,13 @@ def pcaconcat(df,keep_col=2 ,*col,):
     '''
     print(len(col))
     if len(col)==1:
+        df.dropna(subset=[col[0]],inplace=True)
         df_ =  transform(df[col[0]])
     elif len(col)==2:
+        df.dropna(subset=[col[0],col[1]],inplace=True)
         df_ =  transform(df[col[0]]+df[col[1]])
     elif len(col)==3:
+        df.dropna(subset=[col[0],col[1],col[2]],inplace=True)
         df_ =  transform(df[col[0]]+df[col[1]] +df[col[2]])
     else:
         print("最对传入三个列")

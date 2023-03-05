@@ -291,10 +291,10 @@ def transform(location_strs, umap=myumap, index=[], cut=False, lookahead=8, pos_
             'location_strs参数必须为可迭代的类型(比如list, Series等实现了__iter__方法的对象)')
 
     result = pd.DataFrame(
-        [_handle_one_record(addr, umap, cut, 16 if len(addr)>10 else 8, pos_sensitive, open_warning) for addr in location_strs],
+        [_handle_one_record(addr, umap, cut, 16 if len(addr)>10 else 10, pos_sensitive, open_warning) for addr in location_strs],
         index=index) \
         if index else pd.DataFrame(
-        [_handle_one_record(addr, umap, cut, 16 if len(addr)>10 else 8, pos_sensitive, open_warning) for addr in location_strs])
+        [_handle_one_record(addr, umap, cut, 16 if len(addr)>10 else 10, pos_sensitive, open_warning) for addr in location_strs])
     # 这句的唯一作用是让列的顺序好看一些
     if pos_sensitive:
         return result.loc[:, ('省', '市', '区', '地名', '省_pos', '市_pos', '区_pos')]
@@ -315,7 +315,7 @@ def _handle_one_record(addr, umap, cut, lookahead, pos_sensitive, open_warning):
         return empty
 
     # 地名提取
-    pca, left_addr = _extract_addr(addr, cut, 16 if len(addr)>10 else 8)
+    pca, left_addr = _extract_addr(addr, cut, 16 if len(addr)>10 else 10)
     # 填充市
     _fill_city(pca, umap, open_warning)
     # 填充省
@@ -369,7 +369,7 @@ def _extract_addr(addr, cut, lookahead):
        Returns:
            [sheng, shi, qu, (sheng_pos, shi_pos, qu_pos)], addr
     """
-    return _jieba_extract(addr) if cut else _full_text_extract(addr, 16 if len(addr)>10 else 8)
+    return _jieba_extract(addr) if cut else _full_text_extract(addr, 16 if len(addr)>10 else 10)
 
 
 def _jieba_extract(addr):
@@ -435,7 +435,7 @@ def _full_text_extract(addr, lookahead):
         # 用于设置pca属性的函数
         defer_fun = None
         # length为从起始位置开始的长度,从中提取出最长的地址
-        for length in range(1, 16 if len(addr)>10 else 8 + 1):
+        for length in range(1, 16 if len(addr)>10 else 10 + 1):
             end_pos = i + length
             if end_pos > len(addr):
                 break

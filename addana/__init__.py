@@ -500,6 +500,6 @@ def pcaconcat(df,keep_col=2 ,*col,):
 
     df_.columns = ["prov_s","city_s","area_s","loca_s"]  
      
-    return  pd.concat([df,df_.iloc[:,0:keep_col]],axis=1)
+    return  pd.concat([df,df_.iloc[:,0:keep_col]],axis=1).drop(columns=[*col])
 
 

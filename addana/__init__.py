@@ -16,7 +16,7 @@ import pandas as pd
 from .structures import AddrMap, Pca
 from .structures import P, C, A
 
-__version__ = '0.0.24'
+__version__ = '0.0.25'
 
 pwd_path = os.path.abspath(os.path.dirname(__file__))
 # 区划地址文件

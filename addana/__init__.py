@@ -189,8 +189,8 @@ def _fill_city_map(city_map, record_dict):
     pca_tuple = (record_dict[1], record_dict[2], record_dict[3])
     city_map.append_relational_addr(city_name, pca_tuple, C)
     # fix 吉林省、吉林市的混淆
-    # if city_name in filter_city_names:
-    #     pass
+    if city_name in filter_city_names:
+        pass
     if city_name.endswith(u'市'):
         city_map.append_relational_addr(city_name[:-1], pca_tuple, C)
     # 特别行政区
@@ -465,7 +465,7 @@ def _full_text_extract(addr, lookahead):
 
 
 def pcaconcat(df,keep_col=2 ,*col,):
-    
+
     '''
     df: 处理的表
     keep_col: 要保留的到省（1）还是市（2）还是县（3）
@@ -491,15 +491,15 @@ def pcaconcat(df,keep_col=2 ,*col,):
     if (df_["市"]=="").sum() >0:    ## 查看省市为空的个数
         index_error = df_[df_["市"]==""].index
         df_.loc[index_error,"市"] =  df_.loc[index_error,"区"]
-        
+
 
     if (df_["市"]=="").sum() >0:
         print("注意，下面的行的市为空：" ,"\n",df_[df_["市"]==""].drop_duplicates())
     else:
         print("处理完毕，所有市都被识别")
 
-    df_.columns = ["prov_s","city_s","area_s","loca_s"]  
-     
+    df_.columns = ["prov_s","city_s","area_s","loca_s"]
+
     return  pd.concat([df,df_.iloc[:,0:keep_col]],axis=1).drop(columns=[*col])
 
 

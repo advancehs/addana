@@ -191,7 +191,7 @@ def _fill_city_map(city_map, record_dict):
     # fix 吉林省、吉林市的混淆
     if city_name in filter_city_names:
         pass
-    if city_name.endswith(u'市'):
+    elif city_name.endswith(u'市'):
         city_map.append_relational_addr(city_name[:-1], pca_tuple, C)
     # 特别行政区
     # elif city_name == u'香港特别行政区':

@@ -113,7 +113,7 @@ short_area_names = {
 }
 # 处理了部分常见自治州或盟简写
 zizhi_area_names = {
-    # u'吉林市': u'吉林',
+    u'吉林市': u'吉林吉林',
     u'锡林郭勒盟': u'锡林郭勒',
     u'阿拉善盟': u'阿拉善',
     u'兴安盟': u'兴安',
@@ -188,9 +188,14 @@ def _fill_city_map(city_map, record_dict):
     city_name = record_dict[2]  # shi
     pca_tuple = (record_dict[1], record_dict[2], record_dict[3])
     city_map.append_relational_addr(city_name, pca_tuple, C)
+
+    if city_name in zizhi_area_names.keys():
+        city_map.append_relational_addr(zizhi_area_names[city_name], pca_tuple, C)
     # fix 吉林省、吉林市的混淆
-    if city_name in filter_city_names:
+    elif city_name in filter_city_names:
         pass
+    # elif city_name.endswith(u'吉林'):
+    #     city_map.append_relational_addr(city_name+"市", pca_tuple, C)
     elif city_name.endswith(u'市'):
         city_map.append_relational_addr(city_name[:-1], pca_tuple, C)
     # 特别行政区
@@ -200,8 +205,8 @@ def _fill_city_map(city_map, record_dict):
     #     city_map.append_relational_addr(u'澳门', pca_tuple, C)
     # 自治区下的二级区划，eg喀什地区
 
-    elif city_name in zizhi_area_names.keys():
-        city_map.append_relational_addr(zizhi_area_names[city_name], pca_tuple, C)
+    # elif city_name in zizhi_area_names.keys():
+    #     city_map.append_relational_addr(zizhi_area_names[city_name], pca_tuple, C)
 
     elif len(city_name) > 3 and city_name.endswith(u'地区'):
         city_map.append_relational_addr(city_name[:-2], pca_tuple, C)

@@ -9,5 +9,5 @@ sys.path.append('..')
 import  addana
 
 def test_addana():
-    print(addana.transform(["吉林四平"]))
+    print(addana.transform(["吉林：吉林"]))
 test_addana()
